@@ -1,15 +1,12 @@
 <script setup>
-import { useWeather } from './composables/useWeather'
-const { weatherData, loading, error, fetchCurrentWeather } = useWeather()
-
-fetchCurrentWeather('non esiste')
+import SearchBar from './components/SearchBar.vue'
+import CurrentWeather from './components/CurrentWeather.vue'
 </script>
 
 <template>
-  <div>
-    <h1>Weather App - Test Console</h1>
-    <p v-if="loading">Loading...</p>
-    <p v-if="error">Error: {{ error }}</p>
-    <pre v-if="weatherData">{{ weatherData }}</pre>
+  <div class="min-h-screen bg-gray-100 py-8 px-4">
+    <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">☀️ Weather App</h1>
+    <SearchBar />
+    <CurrentWeather />
   </div>
 </template>

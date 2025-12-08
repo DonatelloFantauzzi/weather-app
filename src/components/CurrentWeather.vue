@@ -26,22 +26,25 @@ const { weatherData, loading, error } = useWeather()
 
     <div
       v-else
-      class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg shadow-lg p-6 text-white"
+      class="bg-linear-to-br from-blue-400 to-blue-600 rounded-lg shadow-lg p-6 text-white"
     >
       <!-- Città -->
       <h2 class="text-3xl font-bold mb-2">
         <!-- TODO: mostra weatherData.name -->
+        {{ weatherData.name }}
       </h2>
 
       <!-- Temperatura -->
       <div class="text-6xl font-bold my-4">
         <!-- TODO: mostra weatherData.main.temp con Math.round() -->
+        {{ Math.round(weatherData.main.temp) }} °C
         <!-- Aggiungi °C -->
       </div>
 
       <!-- Descrizione -->
       <p class="text-xl mb-6 capitalize">
         <!-- TODO: mostra weatherData.weather[0].description -->
+        {{ weatherData.weather[0].description }}
       </p>
 
       <!-- Dettagli (Umidità + Vento) -->
@@ -50,12 +53,14 @@ const { weatherData, loading, error } = useWeather()
           <p class="text-blue-100">Umidità</p>
           <p class="text-lg font-semibold">
             <!-- TODO: mostra weatherData.main.humidity + % -->
+            {{ weatherData.main.humidity }} %
           </p>
         </div>
         <div>
           <p class="text-blue-100">Vento</p>
           <p class="text-lg font-semibold">
             <!-- TODO: mostra weatherData.wind.speed + km/h -->
+            {{ weatherData.wind.speed }} km/h
           </p>
         </div>
       </div>
