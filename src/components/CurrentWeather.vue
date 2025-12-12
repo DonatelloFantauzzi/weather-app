@@ -1,6 +1,28 @@
 <script setup>
 import { useWeather } from '../composables/useWeather'
-const { weatherData, loading, error } = useWeather()
+const {
+  forecastData,
+  forecastError,
+  forecastLoading,
+  fetchForecast,
+  showForecast,
+  weatherData,
+  loading,
+  error,
+} = useWeather()
+
+//funzione toggle
+const toggleForecast = async () => {
+  if (!showForecast.value) {
+    if (!forecastData.value) {
+      await fetchForecast(weatherData.value.name)
+    }
+
+    showForecast.value = true
+  } else {
+    showForecast.value = false
+  }
+}
 </script>
 
 <template>
@@ -64,6 +86,15 @@ const { weatherData, loading, error } = useWeather()
           </p>
         </div>
       </div>
+
+      <button
+        @click="toggleForecast"
+        :disabled="forecastLoading"
+        class="w-full mt-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <span v-if="forecastLoading">Caricamento...</span>
+        <span v-else> {{ showForecast ? '🔼 Nascondi' : '📅 Mostra' }} Previsioni 5 Giorni </span>
+      </button>
     </div>
   </div>
 </template>
