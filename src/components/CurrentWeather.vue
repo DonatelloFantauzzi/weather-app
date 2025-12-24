@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useWeather } from '../composables/useWeather'
+import { useFavorites } from '@/composables/useFavorites'
 const {
   forecastData,
   forecastError,
@@ -11,6 +12,10 @@ const {
   loading,
   error,
 } = useWeather()
+const { favorites, addFavorite, removeFavorite, isFavorite } = useFavorites()
+
+//Ref
+const showMaxError = ref(false)
 
 //funzione toggle
 const toggleForecast = async () => {
@@ -22,6 +27,28 @@ const toggleForecast = async () => {
     showForecast.value = true
   } else {
     showForecast.value = false
+  }
+}
+
+let favoriteTimeout = null
+const handleToggleFavorite = () => {
+  if (favoriteTimeout) clearTimeout(favoriteTimeout)
+
+  const cityName = weatherData.value.name
+
+  if (isFavorite(cityName)) {
+    removeFavorite(cityName)
+    showMaxError.value = false
+  } else {
+    const success = addFavorite(cityName)
+    if (success) {
+      showMaxError.value = false
+    } else {
+      showMaxError.value = true
+      favoriteTimeout = setTimeout(() => {
+        showMaxError.value = false
+      }, 5000)
+    }
   }
 }
 
@@ -62,7 +89,7 @@ const dailyForecast = computed(() => {
     }
   })
 
-  return daily.slice(0, 5) // Placeholder
+  return daily.slice(1, 6) // Placeholder
 })
 </script>
 
@@ -98,15 +125,10 @@ const dailyForecast = computed(() => {
       </h2>
 
       <!-- Temperatura -->
-      <div class="text-6xl font-bold my-4">
-        <!-- TODO: mostra weatherData.main.temp con Math.round() -->
-        {{ Math.round(weatherData.main.temp) }} °C
-        <!-- Aggiungi °C -->
-      </div>
+      <div class="text-6xl font-bold my-4">{{ Math.round(weatherData.main.temp) }} °C</div>
 
       <!-- Descrizione -->
       <p class="text-xl mb-6 capitalize">
-        <!-- TODO: mostra weatherData.weather[0].description -->
         {{ weatherData.weather[0].description }}
       </p>
 
@@ -128,6 +150,7 @@ const dailyForecast = computed(() => {
         </div>
       </div>
 
+      <!-- Bottone previsione per 5 giorni -->
       <button
         @click="toggleForecast"
         :disabled="forecastLoading"
@@ -136,6 +159,19 @@ const dailyForecast = computed(() => {
         <span v-if="forecastLoading">Caricamento...</span>
         <span v-else> {{ showForecast ? '🔼 Nascondi' : '📅 Mostra' }} Previsioni 5 Giorni </span>
       </button>
+
+      <!-- Bottone salva/rimuovi preferiti -->
+      <button
+        @click="handleToggleFavorite"
+        class="w-full mt-2 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors"
+      >
+        {{ isFavorite(weatherData.name) ? '⭐ Rimuovi dai' : '☆ Aggiungi ai' }} preferiti
+      </button>
+
+      <!-- Messaggio errore max -->
+      <p v-if="showMaxError" class="text-sm text-yellow-200 mt-2 text-center">
+        ⚠️ Massimo 5 città raggiunte. Rimuovi una città per aggiungerne altre.
+      </p>
     </div>
     <div v-if="showForecast && forecastData" class="mt-4 space-y-3">
       <!-- Loading forecast -->
@@ -155,7 +191,7 @@ const dailyForecast = computed(() => {
         <div
           v-for="day in dailyForecast"
           :key="day.date"
-          class="bg-white rounded-lg shadow p-4 flex items-center justify-between"
+          class="bg-white rounded-lg shadow p-4 flex items-center justify-between mb-4"
         >
           <!-- Sinistra: Data + Descrizione -->
           <div>

@@ -1,6 +1,7 @@
 <script setup>
 import SearchBar from './components/SearchBar.vue'
 import CurrentWeather from './components/CurrentWeather.vue'
+import FavoritesList from './components/FavoritesList.vue'
 </script>
 
 <template>
@@ -8,5 +9,6 @@ import CurrentWeather from './components/CurrentWeather.vue'
     <h1 class="text-4xl font-bold text-center mb-8 text-gray-800">☀️ Weather App</h1>
     <SearchBar />
     <CurrentWeather />
+    <FavoritesList />
   </div>
 </template>
