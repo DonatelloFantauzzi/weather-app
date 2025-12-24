@@ -19,11 +19,14 @@ const handleRemove = (city) => {
 <template>
   <div class="w-full max-w-md mx-auto mt-4">
     <!-- Header -->
-    <h3 class="text-sm font-semibold text-gray-700 mb-2">⭐ Città Preferite</h3>
+    <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-400 mb-2">⭐ Città Preferite</h3>
 
     <!-- Empty state -->
-    <div v-if="favorites.length === 0" class="bg-gray-50 rounded-lg p-4 text-center">
-      <p class="text-gray-500 text-sm">Nessuna città salvata</p>
+    <div
+      v-if="favorites.length === 0"
+      class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 text-center"
+    >
+      <p class="text-gray-500 dark:text-gray-400 text-sm">Nessuna città salvata</p>
     </div>
 
     <!-- Lista favorites -->
@@ -32,13 +35,13 @@ const handleRemove = (city) => {
       <div
         v-for="city in favorites"
         :key="city"
-        class="bg-white rounded-lg shadow p-3 flex items-center justify-between hover:bg-gray-50 transition-colors"
+        class="bg-white dark:bg-gray-700 rounded-lg shadow p-3 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
       >
         <!-- Nome città (cliccabile) -->
         <!-- la città deve essere cliccabile -->
         <button
           @click="handleCityClick(city)"
-          class="flex-1 text-left font-medium text-gray-800 hover:text-blue-600"
+          class="flex-1 text-left font-medium text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
         >
           {{ city }}
         </button>
@@ -46,7 +49,7 @@ const handleRemove = (city) => {
         <!-- Bottone rimuovi -->
         <button
           @click="handleRemove(city)"
-          class="text-red-500 hover:text-red-700 p-2"
+          class="text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 p-2"
           title="Rimuovi dai preferiti"
         >
           🗑️

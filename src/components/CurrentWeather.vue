@@ -96,27 +96,30 @@ const dailyForecast = computed(() => {
 <template>
   <div class="w-full max-w-md mx-auto mt-8">
     <!-- LOADING STATE -->
-    <div v-if="loading" class="bg-white rounded-lg shadow-lg p-6">
+    <div v-if="loading" class="bg-white dark:bg-gray-700 rounded-lg shadow-lg p-6">
       <div class="animate-pulse">
-        <div class="h-8 bg-gray-200 rounded w-3/4 mb-4"></div>
-        <div class="h-16 bg-gray-200 rounded mb-4"></div>
-        <div class="h-4 bg-gray-200 rounded w-1/2"></div>
+        <div class="h-8 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+        <div class="h-16 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
+        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
       </div>
     </div>
 
     <!-- ERROR STATE -->
-    <div v-else-if="error" class="bg-red-50 border border-red-200 rounded-lg p-6">
-      <p class="text-red-600 text-center">{{ error }}</p>
+    <div
+      v-else-if="error"
+      class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6"
+    >
+      <p class="text-red-600 dark:text-red-400 text-center">{{ error }}</p>
     </div>
 
     <!-- EMPTY STATE -->
-    <div v-else-if="!weatherData" class="bg-gray-50 rounded-lg p-8 text-center">
-      <p class="text-gray-500">🔍 Cerca una città per vedere il meteo</p>
+    <div v-else-if="!weatherData" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-8 text-center">
+      <p class="text-gray-500 dark:text-gray-400">🔍 Cerca una città per vedere il meteo</p>
     </div>
 
     <div
       v-else
-      class="bg-linear-to-br from-blue-400 to-blue-600 rounded-lg shadow-lg p-6 text-white"
+      class="bg-linear-to-br from-blue-400 to-blue-600 dark:from-blue-600 dark:to-blue-800 rounded-lg shadow-lg p-6 text-white"
     >
       <!-- Città -->
       <h2 class="text-3xl font-bold mb-2">
@@ -169,19 +172,25 @@ const dailyForecast = computed(() => {
       </button>
 
       <!-- Messaggio errore max -->
-      <p v-if="showMaxError" class="text-sm text-yellow-200 mt-2 text-center">
+      <p v-if="showMaxError" class="text-sm text-yellow-200 dark:text-yellow-300 mt-2 text-center">
         ⚠️ Massimo 5 città raggiunte. Rimuovi una città per aggiungerne altre.
       </p>
     </div>
     <div v-if="showForecast && forecastData" class="mt-4 space-y-3">
       <!-- Loading forecast -->
-      <div v-if="forecastLoading" class="bg-white rounded-lg shadow p-4 text-center text-gray-500">
-        Caricamento previsioni...
+      <div
+        v-if="forecastLoading"
+        class="bg-white dark:bg-gray-700 rounded-lg shadow p-4 text-center"
+      >
+        <p class="text-gray-500 dark:text-gray-400">Caricamento previsioni...</p>
       </div>
 
       <!-- Error forecast -->
-      <div v-else-if="forecastError" class="bg-red-50 border border-red-200 rounded-lg p-4">
-        <p class="text-red-600">{{ forecastError }}</p>
+      <div
+        v-else-if="forecastError"
+        class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4"
+      >
+        <p class="text-red-600 dark:text-red-400">{{ forecastError }}</p>
       </div>
 
       <!-- Forecast cards (TU COMPLETI) -->
@@ -191,12 +200,12 @@ const dailyForecast = computed(() => {
         <div
           v-for="day in dailyForecast"
           :key="day.date"
-          class="bg-white rounded-lg shadow p-4 flex items-center justify-between mb-4"
+          class="bg-white dark:bg-gray-700 rounded-lg shadow p-4 flex items-center justify-between mb-4"
         >
           <!-- Sinistra: Data + Descrizione -->
           <div>
-            <p class="font-semibold text-gray-800">{{ day.date }}</p>
-            <p class="text-sm text-gray-600 capitalize">{{ day.description }}</p>
+            <p class="font-semibold text-gray-700 dark:text-white">{{ day.date }}</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400 capitalize">{{ day.description }}</p>
           </div>
 
           <!-- Centro: Icona (per ora emoji placeholder) -->
@@ -207,8 +216,12 @@ const dailyForecast = computed(() => {
 
           <!-- Destra: Temperature -->
           <div class="text-right">
-            <p class="text-lg font-semibold text-gray-800">{{ Math.round(day.tempMax) }}°C</p>
-            <p class="text-sm text-gray-500">Min: {{ Math.round(day.tempMin) }}°C</p>
+            <p class="text-lg font-semibold text-gray-700 dark:text-white">
+              {{ Math.round(day.tempMax) }}°C
+            </p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              Min: {{ Math.round(day.tempMin) }}°C
+            </p>
           </div>
         </div>
       </div>
