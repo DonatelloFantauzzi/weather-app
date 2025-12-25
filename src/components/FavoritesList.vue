@@ -35,7 +35,7 @@ const handleRemove = (city) => {
       <div
         v-for="city in favorites"
         :key="city"
-        class="bg-white dark:bg-gray-700 rounded-lg shadow p-3 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+        class="bg-white hover:shadow-lg transform hover:-translate-y-1 transition-all duration-200 dark:bg-gray-700 rounded-lg shadow p-3 flex items-center justify-between hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
       >
         <!-- Nome città (cliccabile) -->
         <!-- la città deve essere cliccabile -->
