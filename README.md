@@ -228,7 +228,6 @@ This project is open source and available under the [MIT License](LICENSE).
 **Your Name**
 
 - GitHub: [@DonatelloFantauzzi](https://github.com/DonatelloFantauzzi)
-- Portfolio: [your-portfolio.com](https://your-portfolio.com)
 
 ---
 
